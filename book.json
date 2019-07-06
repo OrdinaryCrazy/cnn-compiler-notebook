@@ -1,0 +1,41 @@
+{
+    "output": null,
+    "generator": "site",
+    "title": "book",
+    "description": null,
+    "extension": null,
+    "github": null,
+    "githubHost": "https://github.com/",
+    "plugins": [],
+    "pluginsConfig": {
+        "fontSettings": {
+            "theme": "sepia",
+            "family": "serif",
+            "size": 1
+        }
+    },
+    "links": {
+    	"sidebar": {
+    	    "Custom link name": "https://customlink.com"
+    	},
+        "sharing": {
+            "google": null,
+            "facebook": null,
+            "twitter": null,
+            "weibo": null,
+            "all": null
+        }
+    },
+    "pdf": {
+        "toc": true,
+        "pageNumbers": false,
+        "fontSize": 30,
+        "paperSize": "a4",
+        "margin": {
+            "right": 62,
+            "left": 62,
+            "top": 36,
+            "bottom": 36
+        }
+    }
+}
