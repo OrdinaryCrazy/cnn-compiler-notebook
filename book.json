@@ -7,6 +7,9 @@
     "github": null,
     "githubHost": "https://github.com/",
     "plugins": [],
+    "styles": {
+        "pdf": "styles/pdf.css"
+    },
     "pluginsConfig": {
         "fontSettings": {
             "theme": "sepia",
@@ -28,8 +31,9 @@
     },
     "pdf": {
         "toc": true,
-        "pageNumbers": false,
+        "pageNumbers": true,
         "fontSize": 30,
+        "fontFamily":"Fira Code,'汉仪南宫体简'",
         "paperSize": "a4",
         "margin": {
             "right": 62,
