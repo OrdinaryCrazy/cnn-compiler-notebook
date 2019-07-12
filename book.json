@@ -6,7 +6,7 @@
     "extension": null,
     "github": null,
     "githubHost": "https://github.com/",
-    "plugins": [],
+    "plugins": ["mathjax"],
     "styles": {
         "pdf": "styles/pdf.css"
     },
@@ -32,7 +32,7 @@
     "pdf": {
         "toc": true,
         "pageNumbers": true,
-        "fontSize": 30,
+        "fontSize": 12,
         "fontFamily":"Fira Code,'汉仪南宫体简'",
         "paperSize": "a4",
         "margin": {
