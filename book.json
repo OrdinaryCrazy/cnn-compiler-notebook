@@ -6,15 +6,26 @@
     "extension": null,
     "github": null,
     "githubHost": "https://github.com/",
-    "plugins": ["mathjax"],
+    "plugins": [
+        "katex@^1.1.3",
+        "prism",
+        "-highlight",
+        "prism-themes"
+    ],
     "styles": {
         "pdf": "styles/pdf.css"
+
     },
     "pluginsConfig": {
         "fontSettings": {
             "theme": "sepia",
             "family": "serif",
             "size": 1
+        },
+        "prism": {
+            "css": [
+                "prismjs/themes/prism-xonokai.css"
+            ]
         }
     },
     "links": {
@@ -33,7 +44,7 @@
         "toc": true,
         "pageNumbers": true,
         "fontSize": 12,
-        "fontFamily":"Fira Code,'汉仪南宫体简'",
+        "fontFamily":"Courier +  BOLDITALIC",
         "paperSize": "a4",
         "margin": {
             "right": 62,

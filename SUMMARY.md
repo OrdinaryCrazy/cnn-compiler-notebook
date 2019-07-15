@@ -6,4 +6,5 @@
 * [GNN](GNN/README.md)
     * [DFF](GNN/DFF.md)
     * [learn-pytorch-geometric](GNN/learn-pytorch-geometric.md)
+    * [learn-tensorflow](/GNN/learn-tensorflow.md)
 

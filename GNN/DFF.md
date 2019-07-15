@@ -4,17 +4,17 @@
 
 *Solution*: run expensive convolutional sub-network only on sparse **key frames（关键帧）** and propagates their deep feature maps to other frames via a **flow field（流域）**.
 
-*   Decompose neutral network $\mathcal{N}$ into **feature network** and **task network**
-*   Run $\mathcal{N_{feat}}$ only on key-frame and propagate featuremap to following non-key frame
+*   Decompose neutral network $$\mathcal{N}$$ into **feature network** and **task network**
+*   Run $$\mathcal{N_{feat}}$$ only on key-frame and propagate featuremap to following non-key frame
 
 ## Deep Feature Flow
 
 *   feature propagation function (特征传播函数)
 
 $$
-\bf{f}_i =\mathcal{W}(\bf{f}_k, M_{i \to k}, S_{i \to k})
+f_i =\mathcal{W}(f_k, M_{i \to k}, S_{i \to k})
 $$
 
-*   where $M_{i \to k}$ is a two dimensional flow field
+*   where $$M_{i \to k}$$ is a two dimensional flow field
 *   
 
