@@ -43,7 +43,7 @@
     "pdf": {
         "toc": true,
         "pageNumbers": true,
-        "fontSize": 12,
+        "fontSize": 20,
         "fontFamily":"Courier +  BOLDITALIC",
         "paperSize": "a4",
         "margin": {
