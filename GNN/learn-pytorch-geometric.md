@@ -234,11 +234,198 @@ for batch in loader:
 
 #### `propagate(edge_index, size=None, **kwargs):`
 
+It takes in edge index and other optional information, such as node features (embedding). Calling this function will consequently call *message* and *update*.
 
+#### `message(**kwargs):`
+
+construct “message” for each of the node pair $$(x_i, x_j)$$
+
+#### `update(aggr_out,**kwargs):`
+
+It takes in the aggregated message and other arguments passed into *propagate*, assigning a new embedding value for each node.
+
+Example:
+
+```python
+import torch
+from torch.nn import Sequential as Seq, Linear, ReLU
+from torch_geometric.nn import MessagePassing
+from torch_geometric.utils import remove_self_loops, add_self_loops
+class SAGEConv(MessagePassing):
+    def __init__(self, in_channels, out_channels):
+        super(SAGEConv, self).__init__(aggr='max') #  "Max" aggregation.
+        self.lin = torch.nn.Linear(in_channels, out_channels)
+        self.act = torch.nn.ReLU()
+        self.update_lin = torch.nn.Linear(in_channels + out_channels, in_channels, bias=False)
+        self.update_act = torch.nn.ReLU()
+        
+    def forward(self, x, edge_index):
+        # x has shape [N, in_channels]
+        # edge_index has shape [2, E]
+        
+        
+        edge_index, _ = remove_self_loops(edge_index)
+        edge_index, _ = add_self_loops(edge_index, num_nodes=x.size(0))
+        
+        
+        return self.propagate(edge_index, size=(x.size(0), x.size(0)), x=x)
+
+    def message(self, x_j):
+        # x_j has shape [E, in_channels]
+
+        x_j = self.lin(x_j)
+        x_j = self.act(x_j)
+        
+        return x_j
+
+    def update(self, aggr_out, x):
+        # aggr_out has shape [N, out_channels]
+
+
+        new_embedding = torch.cat([aggr_out, x], dim=1)
+        
+        new_embedding = self.update_lin(new_embedding)
+        new_embedding = self.update_act(new_embedding)
+        
+        return new_embedding
+```
 
 ## Build a Graph Neural Network
 
+```python
+embed_dim = 128
+from torch_geometric.nn import TopKPooling
+from torch_geometric.nn import global_mean_pool as gap, global_max_pool as gmp
+import torch.nn.functional as F
+class Net(torch.nn.Module):
+    def __init__(self):
+        super(Net, self).__init__()
 
+        self.conv1 = SAGEConv(embed_dim, 128)
+        self.pool1 = TopKPooling(128, ratio=0.8)
+        self.conv2 = SAGEConv(128, 128)
+        self.pool2 = TopKPooling(128, ratio=0.8)
+        self.conv3 = SAGEConv(128, 128)
+        self.pool3 = TopKPooling(128, ratio=0.8)
+        self.item_embedding = torch.nn.Embedding(num_embeddings=df.item_id.max() +1, embedding_dim=embed_dim)
+        self.lin1 = torch.nn.Linear(256, 128)
+        self.lin2 = torch.nn.Linear(128, 64)
+        self.lin3 = torch.nn.Linear(64, 1)
+        self.bn1 = torch.nn.BatchNorm1d(128)
+        self.bn2 = torch.nn.BatchNorm1d(64)
+        self.act1 = torch.nn.ReLU()
+        self.act2 = torch.nn.ReLU()        
+    def forward(self, data):
+        x, edge_index, batch = data.x, data.edge_index, data.batch
+        x = self.item_embedding(x)
+        x = x.squeeze(1)        
+
+        x = F.relu(self.conv1(x, edge_index))
+
+        x, edge_index, _, batch, _ = self.pool1(x, edge_index, None, batch)
+        x1 = torch.cat([gmp(x, batch), gap(x, batch)], dim=1)
+
+        x = F.relu(self.conv2(x, edge_index))
+        
+        x, edge_index, _, batch, _ = self.pool2(x, edge_index, None, batch)
+        x2 = torch.cat([gmp(x, batch), gap(x, batch)], dim=1)
+
+        x = F.relu(self.conv3(x, edge_index))
+
+        x, edge_index, _, batch, _ = self.pool3(x, edge_index, None, batch)
+        x3 = torch.cat([gmp(x, batch), gap(x, batch)], dim=1)
+
+        x = x1 + x2 + x3
+
+        x = self.lin1(x)
+        x = self.act1(x)
+        x = self.lin2(x)
+        x = self.act2(x)      
+        x = F.dropout(x, p=0.5, training=self.training)
+
+        x = torch.sigmoid(self.lin3(x)).squeeze(1)
+
+        return x
+```
+
+### Train
+
+```python
+def train():
+    model.train()
+
+    loss_all = 0
+    for data in train_loader:
+        data = data.to(device)
+        optimizer.zero_grad()
+        output = model(data)
+        label = data.y.to(device)
+        loss = crit(output, label)
+        loss.backward()
+        loss_all += data.num_graphs * loss.item()
+        optimizer.step()
+    return loss_all / len(train_dataset)
+    
+device = torch.device('cuda')
+model = Net().to(device)
+optimizer = torch.optim.Adam(model.parameters(), lr=0.005)
+crit = torch.nn.BCELoss()
+train_loader = DataLoader(train_dataset, batch_size=batch_size)
+for epoch in range(num_epochs):
+    train()
+```
+
+### Validation
+
+```python
+def evaluate(loader):
+    model.eval()
+
+    predictions = []
+    labels = []
+
+    with torch.no_grad():
+        for data in loader:
+
+            data = data.to(device)
+            pred = model(data).detach().cpu().numpy()
+
+            label = data.y.detach().cpu().numpy()
+            predictions.append(pred)
+            labels.append(label)
+```
+
+### Test
+
+```python
+for epoch in range(1):
+    loss = train()
+    train_acc = evaluate(train_loader)
+    val_acc = evaluate(val_loader)    
+    test_acc = evaluate(test_loader)
+    print('Epoch: {:03d}, Loss: {:.5f}, Train Auc: {:.5f}, Val Auc: {:.5f}, Test Auc: {:.5f}'.
+          format(epoch, loss, train_acc, val_acc, test_acc))for epoch in range(1):
+    loss = train()
+    train_acc = evaluate(train_loader)
+    val_acc = evaluate(val_loader)    
+    test_acc = evaluate(test_loader)
+    print('Epoch: {:03d}, Loss: {:.5f}, Train Auc: {:.5f}, Val Auc: {:.5f}, Test Auc: {:.5f}'.
+          format(epoch, loss, train_acc, val_acc, test_acc))
+```
+
+## Message Passing Networks
+
+Generalizing the convolution operator to irregular domains is typically expressed as a *neighborhood aggregation* or *message passing* scheme. 
+
+$$\mathbf{x}_i^{(k)} = \gamma^{(k)} \left( \mathbf{x}_i^{(k-1)}, \square_{j \in \mathcal{N}(i)} \, \phi^{(k)}\left(\mathbf{x}_i^{(k-1)}, \mathbf{x}_j^{(k-1)},\mathbf{e}_{i,j}\right) \right)$$
+
+PyTorch Geometric provides the `torch_geometric.nn.MessagePassing` base class, which helps in creating such kinds of message passing graph neural networks by automatically taking care of message propagation. The user only has to define the functions *𝜙* , *i.e.* `message()`, and *𝛾*, *.i.e.*`update()`, as well as the aggregation scheme to use, *.i.e.* `aggr='add'`, `aggr='mean'` or `aggr='max'`.
+
+*   **torch_geometric.nn.MessagePassing(aggr="add",** **flow="source_to_target")**
+*   **torch_geometric.nn.MessagePassing.propagate(edge_index,** **size=None,** ***\*kwargs)**
+    *   In *forward* method
+*   **torch_geometric.nn.MessagePassing.message()**
+*   **torch_geometric.nn.MessagePassing.update()**
 
 
 
