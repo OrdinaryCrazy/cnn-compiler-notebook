@@ -1,0 +1,8 @@
+h5py
+networkx
+numpy
+pandas
+plyfile
+rdflib
+scikit-learn
+scipy

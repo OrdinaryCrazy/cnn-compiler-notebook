@@ -1,0 +1,184 @@
+
+\documentclass[titlepage]{article}
+\usepackage{geometry}
+\usepackage{amsmath}
+\usepackage{graphicx}
+\usepackage{listings}
+\usepackage{amsfonts}
+\usepackage{amssymb}
+
+\geometry{left=2.5cm,right=2.5cm,bottom=2cm,top=2cm}
+
+\newcommand*{\QEDA}{\hfill\ensuremath{\blacksquare}}
+%====================================================================
+
+
+
+\bibliographystyle{plain}
+
+
+\begin{document}
+\noindent
+
+
+
+
+In this section, we first show that motion operation and convolution operation can be expressed as matrix operations (Lemma 1). 
+Then we will proceed to prove the existence of a linear transformation that maps the feature map of key frame to the feature map of non-key frames based on the motion information (Theorem 2).
+Finally, we will show that the error term of residual map will not explode after a sequence of convolution operations, guaranteeing that flowed feature maps enjoys only a negligible error from the convolution feature map generated from the non-key frame (Theorem 3). \\
+
+%In this section we try to prove the underlying principle of Deep Feature Flow (DFF) \cite{Zhu_2017_CVPR} which can be described as following theorem:
+
+%\noindent {\bf{Settings. }}
+%Denote the key frame as $\mathcal{A}$ and non-key frame as $\mathcal{B}$, we can extract the corresponding motion vector $M_{i \to k}$ from the compressed video.
+%Given a convolution operation $C$, we can generate the feature map $B$ of 
+
+\noindent {\bf{Lemma 1.}} Motion operation $\mathcal{M}_{\mathcal{A} \to \mathcal{B}}$ and convolution operation $C$ can be expressed as matrix operations, thus linear operations. \\
+
+\noindent {\bf{Proof:}}
+%For any pair of key frame $ {\bf{I}}_{k} $ and non-key frame $ {\bf{I}}_{i}$, there exists a linear transformation T that transforms feature maps of $ {\bf{I}}_{k}$ to feature maps of ${\bf{I}}_{i}$.
+For an arbitrary image $\mathcal{A}$, we can unroll into vector
+\begin{center}
+    $\mathcal{V} = \{ \mathcal{A}_{00},\mathcal{A}_{01}, \dots, \mathcal{A}_{0d}, \mathcal{A}_{10},\mathcal{A}_{11}, \dots, \mathcal{A}_{1d},\dots,\mathcal{A}_{d0},\mathcal{A}_{d1}, \dots,\mathcal{A}_{dd}\}$
+\end{center}
+% from left to right, top to bottom, 
+where $\mathcal{A}_{ij}$ stands for the element of $\mathcal{A}$ at row i and column j and generate permutation matrix $\mathcal{T}$ by the pixel repositioning relationship given by flow field $M_{i \to k}$.
+Then, we can multiply the vector and the permutation matrix in ordinary way as a shuffle of elements:
+\begin{center}
+    $\mathcal{V'} = \mathcal{V} * \mathcal{M}_{\mathcal{A} \to \mathcal{B}}$
+\end{center}
+Finally, we can reshape the vector back to matrix
+\begin{center}
+    $\mathcal{A'} = \{\mathcal{V'}_{0}, \dots, \mathcal{V'}_{d - 1}; \mathcal{V'}_{d}, \dots, \mathcal{V'}_{2d-1}; \dots ; \mathcal{V'}_{(d-1)*d}, \dots, \mathcal{V'}_{d*d} \}$
+\end{center}
+where $\mathcal{V'}_{i}$ stands for the ith element of $\mathcal{V'}$. 
+Following this "unroll-matrix-vector-multiply-reshape" pattern, we can convert the motion operation to a linear operation. 
+Similarly, we can also convert the convolution operation $\mathcal{C}$ into a linear operation.
+%It is noticeable that the multiplication between  $\mathcal{A}$  and $\mathcal{T}$, similarly $\mathcal{A}$ and $\mathcal{C}$ both operate in this kind of "unroll-matrix-vector-multiply-reshape" linear transform way, not the ordinary matrix-matrix multiplication.
+\QEDA \\
+
+Based on the linearity of motion operation and convolution operation, we can show the existence of linear transformation between feature maps of key frame $\mathcal{A}$ and the feature map of non-key frame $\mathcal{B}$ as follows: \\
+
+\noindent {\bf{Theorem 2.}} Given a convolution operation $\mathbb{C}$, $\forall$ frame $\mathcal{A}$ and $\mathcal{B}$, as well as the corresponding feature maps $\mathcal{A'}$ and $\mathcal{B'}$, $\exists$ a linear transformation $\mathcal{T} = \mathcal{C}^{-1}\cdot \mathcal{M}_{\mathcal{A} \to \mathcal{B}} \cdot \mathcal{C}$, such that $\mathcal{B'} = \mathcal{A'} \cdot \mathcal{T} + \mathcal{\delta'}$, where $\mathcal{\delta'} = \mathcal{\delta}C$, where $\mathcal{M}_{\mathcal{A} \to \mathcal{B}}$ and $\mathcal{\delta}$ are motion and error information extracted from motion vector and residual map respectively.\\
+
+
+
+
+%Feature map of non-key frame $ {\bf{I}}_{i} $ can be generated from feature map of key frame $ {\bf{I}}_{k} $ by linear transformation based on the flow field $M_{i \to k}$.
+
+
+
+
+This theorem shows that the motion information between two frames can be used to generate a linear transformation between the corresponding two feature maps. 
+Intuitively, the convolution operation can be unrolled into a linear operation, thus the composition of motion between frames and convolution still enjoys the linearity.
+For simplicity, we cover the case when a single convolution operation is applied.\\
+% The proof can be generalized to the case of multiple convolution layer due to the \\
+%Intuitively, the \\
+
+
+
+%existence of a linear transformation from the key frame feature to the non-key frame feature, as long as these two frames are connected with a motion vector.
+%While this motion vector at
+
+
+%Because feature map of non-key frame can be derived linearly from feature map of key frame and flow field $M_{i \to k}$ and the residual between real feature map of non-key frame and linear transformation from key frame's feature map will not be magnified exponentially. 
+%From single convolution layer's view, optical flow of input image and convolution are all linear transformation, so the feature map of key-frame can linearly restore the key-frame and then be linearly transformed to non-key frame feature map. The detaild proof is described as following:\\
+
+\noindent {\bf{Proof:}}
+%For arbitrary convolution operation $\mathbb{C}$, we can unroll into a matrix operation, denoated as $\mathcal{C}$. Denote the input feature map to 
+Extracting from compressed video the motion information $\mathcal{M}_{\mathcal{A} \to \mathcal{B}}$ in motion vector and the error information $\delta$ from the residual map, we have 
+\begin{equation}
+    \mathcal{B} = \mathcal{A}\mathcal{M}_{\mathcal{A} \to \mathcal{B}} + \mathcal{\delta} 
+\end{equation}
+
+%For most pixels in non-key feature map is just the repositioning of key-frame, we can formulate this phenomenon as follows:
+%We take a single layer of the key frame $ {\bf{I}}_{k} $ as matrix $\mathcal{A} \in$ $\mathbb{R}^{d \times d}$ and similarly, matrix $\mathcal{B}$ for corresponding non-key frame $ {\bf{I}}_{i} $ . 
+%Then we have a linear algebra equation:
+%\begin{equation}
+%    \mathcal{B} = \mathcal{A}\mathcal{T} + \mathcal{\delta} 
+%\end{equation}
+%\noindent
+%where $\mathcal{T}$ is the pixel permutation matrix generated by the flow field $M_{i \to k}$ and $\mathcal{\delta}$ is residual.
+% Details of generation of $\mathcal{T}$ will be shown in Appendix A.
+
+
+\noindent
+Following existing works \cite{Dumoulin2016AGT}, we represents 2D convolution operation as matrix multiplication:
+\begin{equation}
+    \mathcal{A'} = \mathcal{A}\mathcal{C}
+\end{equation}
+where $\mathcal{A'}$ stand for the feature map after single layer convolution. Similarly we have:
+
+\begin{equation} \label{eq:linear}
+    \begin{aligned} 
+        \mathcal{B'}    &= \mathcal{B}\mathcal{C} \\
+                        &= (\mathcal{A}\mathcal{M}_{\mathcal{A} \to \mathcal{B}} + \mathcal{\delta} )\mathcal{C} \\
+                        &= \mathcal{A}\mathcal{M}_{\mathcal{A} \to \mathcal{B}}\mathcal{C} + \mathcal{\delta}\mathcal{C}\\
+                        &= \mathcal{A'}{\mathcal{C}}^{-1}\mathcal{M}_{\mathcal{A} \to \mathcal{B}}\mathcal{C} + \mathcal{\delta}\mathcal{C} \\
+                        &= \mathcal{A'}\mathcal{T'} + \mathcal{\delta'}
+    \end{aligned}
+\end{equation}
+
+% we set $ \mathcal{T'} = {\mathcal{C}}^{-1}\mathcal{T}\mathcal{C}$ and $\mathcal{\delta'} = \mathcal{\delta}\mathcal{C}$ thus we have equation:
+%thus we can see that $\mathcal{B'}$ can be transformed from $\mathcal{A'}$ linearly, we assume that $\mathcal{B'}$ has similar linear relationship with $\mathcal{A'}$ as linear relationship between $\mathcal{B}$ and $\mathcal{A}$:
+%\begin{equation}
+%    \mathcal{B'} = \mathcal{A'}\mathcal{T'} + \mathcal{\delta'} 
+%\end{equation}
+%Intuitively we can assume $ \mathcal{T'} = {\mathcal{C}}^{-1}\mathcal{T}\mathcal{C}$ and $\mathcal{\delta'} = \mathcal{\delta}\mathcal{C}$. 
+
+\QEDA\\
+
+\noindent{\bf{Remark:}} This proof for single convolution layer can be generalized to multiple convolution layers since the composition of multiple linear operations is still a linear operation.
+Specifically, given a sequence of convolution operations $\mathcal{C}_1, \mathcal{C}_2, ..., \mathcal{C}_n$, we can generate the corresponding matrix operations $C_1, C_2, ..., C_n$ following  Lemma 1.
+The composition of convolution operations $\mathcal{C}_1, \mathcal{C}_2, ..., \mathcal{C}_n$ can be treated as matrix multiplication $C_1 C_2 \cdots C_n$, which is still a linear operation.
+Substituting $\mathcal{C}$ in equation \ref{eq:linear} with $C_1 C_2 \cdots C_n$, we can show the existence of linear transformation when multiple convolution layers exist.\\
+
+
+
+%\noindent
+%{\bf{Corollary.}} feature map of non-key frame $ {\bf{I}}_{i} $ can be generated from feature map of key frame $ {\bf{I}}_{k} $ by linear transformation based on the flow field $M_{i \to k}$  and magnitude of residual will not be magnified exponentially while adding more convolution layers.
+
+In feature flow, we exploit the motion information for computation reuse, while not utilizing the error information captured by the residual map, in order to reduce computation.
+In the following theorem, we show that the error information does not magnify after convolution operations, guaranteeing a negligible error of the flowed feature map.
+To quantify the convolution weights, we assume the unit normality at the convolution filter level, \textit{i.e.}, $d * Var[C_{kj}] \sim N(0,1)$, following current theoretical analysis \cite{Glorot10understandingthe, He_2015_ICCV} on convolution weights,  where $(k,j)$ is the location of weights and $d$ is the total number of weights.
+In addition, we assume that the error information is a white noise, \textit{i.e.}, $\delta \sim N(0, \sigma^2)$, since the patterns across frames have been captured explicitly by the motion information.
+Intuitively, this error information is independent from the convolution weights, since the error information from testing frames not used in the training procedure.\\
+
+
+\noindent {\bf{Theorem 3.}} Given a convolution operation C with unit normality and an error information $\delta \sim \mathcal{N}(0, \sigma^2)$, the error information $\delta'$ after convolution operation enjoys convolution-invariance, \textit{i.e.}, $\delta' = \delta C \sim \mathcal{N}(0, \sigma^2)$.\\
+
+
+% Magnitude of residual will not be magnified exponentially while adding more convolution layers.
+
+\noindent {\bf{Proof:}}
+%Assuming that element of $\mathcal{\delta}$ subject to independent zero-mean Gaussian distribution $\mathcal{\delta} \sim \mathcal{N}(0, \theta^2)$ and $\mathcal{C}$ is independent with $\mathcal{\delta}$, so $\mathcal{\delta'}$ also is zero-mean:
+For arbitrary pixel $\delta'_{ij}$ at location $(i,j)$, we have 
+\begin{equation}
+    \begin{aligned}
+        E [\mathcal{\delta'}_{ij}] &= E [\sum_{k}\mathcal{\delta}_{jk} * \mathcal{C}_{kj}] \\
+                                 &= \sum_{k} E [\mathcal{\delta}_{jk} * \mathcal{C}_{kj}] \\ 
+                                 &= \sum_{k} E [\mathcal{\delta}_{jk}] * E[\mathcal{C}_{kj}] \\ 
+                                 & = \sum_{k} \mathcal{\delta}_{jk} * 0\\
+                                        &= 0
+    \end{aligned}
+\end{equation}
+Here, the first equality follows the definition of convolution operation and the second equality comes from the property of expectation. The third equality holds since error term $\delta_{jk}$ and the convolution weights $C_{kj}$ is independent and the forth equality comes from the unit normality of convolution weights.
+
+To quantify the variance, we have
+\begin{equation}
+    \begin{aligned}
+        Var[\mathcal{\delta}_{ij}'] &= Var[ \sum_{k}\mathcal{\delta}_{ik} * \mathcal{C}_{kj} ]\\
+        &= \sum_{k} Var[\mathcal{\delta}_{ik} * \mathcal{C}_{kj} ]\\
+        &= \sum_{k} Var[\mathcal{\delta}_{ik}] * Var[\mathcal{C}_{kj} ]\\
+        & = \sigma^2 * \sum_{k} Var[ \mathcal{C}_{kj} ]\\
+        & = \sigma^2 * d * Var[\mathcal{C}_{kj}]\\
+        &= \sigma^2
+    \end{aligned}
+\end{equation}
+Here, the second and third equation holds due to the independence between convolution weights and error terms.
+ \QEDA\\
+
+
+
+\bibliography{cite.bib}
+\end{document}

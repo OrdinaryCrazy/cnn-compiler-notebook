@@ -1,0 +1,12 @@
+Metadata-Version: 1.1
+Name: torch-geometric
+Version: 1.3.0
+Summary: Geometric Deep Learning Extension Library for PyTorch
+Home-page: https://github.com/rusty1s/pytorch_geometric
+Author: Matthias Fey
+Author-email: matthias.fey@tu-dortmund.de
+License: UNKNOWN
+Download-URL: https://github.com/rusty1s/pytorch_geometric/archive/1.3.0.tar.gz
+Description: UNKNOWN
+Keywords: pytorch,geometric-deep-learning,graph-neural-networks
+Platform: UNKNOWN
