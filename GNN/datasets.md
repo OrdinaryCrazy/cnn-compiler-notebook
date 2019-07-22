@@ -11,6 +11,7 @@
 | Reddit   | 232,965 | 57,307,946 | (raw)1.4GB          | node classification | online discussion                   |
 |          |         |            |                     |                     |                                     |
 
-数据集：https://dl.acm.org/citation.cfm?id=2783417>：<https://dl.acm.org/citation.cfm?id=2783417>
+数据集：<https://dl.acm.org/citation.cfm?id=2783417>：<https://dl.acm.org/citation.cfm?id=2783417>
 
-http://networkrepository.com/
+<http://networkrepository.com/>
+
