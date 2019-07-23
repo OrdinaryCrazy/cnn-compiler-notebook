@@ -126,8 +126,10 @@ class MessagePassing(torch.nn.Module):
                 message_args.insert(idx, kwargs[arg])
 
         update_args = [kwargs[arg] for arg in self.__update_args__]
-
+        
+        #------------------------------------------------------------------------------------------ 
         startTime = time.time()
+
         out = self.message(*message_args)
         # 这一步就是 aggregate
         out = scatter_(self.aggr, out, edge_index[i], dim_size=size[i])
@@ -139,8 +141,11 @@ class MessagePassing(torch.nn.Module):
         # endTime = time.time()
         out = self.update(out, *update_args)
         # 这个update和我们要测的那个有所不同，这个只是定义如何aggregate，没有learning的作用
+
         endTime = time.time()
-        self.aggregateTime += endTime - startTime
+        # self.aggregateTime += endTime - startTime
+        self.aggregateTime = endTime - startTime
+        #------------------------------------------------------------------------------------------
         return out#, endTime - startTime
 
     def message(self, x_j):  # pragma: no cover

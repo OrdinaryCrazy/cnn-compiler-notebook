@@ -116,12 +116,16 @@ class GCNConv(MessagePassing):
         """
 
         """
+
+        #-----------------------------------------------------------
         startTime = time.time()
         # 这里才是kernel mapping的操作
         x = torch.matmul(x, self.weight)
         endTime = time.time()
-        self.mappingTime += endTime - startTime
-
+        # self.mappingTime += endTime - startTime
+        self.mappingTime = endTime - startTime
+        #-----------------------------------------------------------
+        
         if self.cached and self.cached_result is not None:
             if edge_index.size(1) != self.cached_num_edges:
                 raise RuntimeError(

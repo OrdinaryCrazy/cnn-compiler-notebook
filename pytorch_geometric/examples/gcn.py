@@ -10,19 +10,19 @@ from    torch_geometric.nn          import GCNConv, ChebConv  # noqa
 
 # dataset = 'Cora'
 # dataset = 'CiteSeer'
-# dataset = 'PubMed'
-# path = osp.join(osp.dirname(osp.realpath(__file__)), '..', 'data', dataset)
-# dataset = Planetoid(path, dataset, T.NormalizeFeatures())
-# data = dataset[0]
+dataset = 'PubMed'
+path = osp.join(osp.dirname(osp.realpath(__file__)), '..', 'data', dataset)
+dataset = Planetoid(path, dataset, T.NormalizeFeatures())
+data = dataset[0]
 
-path = osp.join(osp.dirname(osp.realpath(__file__)), '..', 'data', 'PPI')
-train_dataset = PPI(path, split='train')
-val_dataset = PPI(path, split='val')
-test_dataset = PPI(path, split='test')
-train_batch_size = 256
-train_loader = DataLoader(train_dataset, batch_size=train_batch_size, shuffle=True)
-val_loader = DataLoader(val_dataset, batch_size=2, shuffle=False)
-test_loader = DataLoader(test_dataset, batch_size=2, shuffle=False)
+# path = osp.join(osp.dirname(osp.realpath(__file__)), '..', 'data', 'PPI')
+# train_dataset = PPI(path, split='train')
+# val_dataset = PPI(path, split='val')
+# test_dataset = PPI(path, split='test')
+# train_batch_size = 256
+# train_loader = DataLoader(train_dataset, batch_size=train_batch_size, shuffle=True)
+# val_loader = DataLoader(val_dataset, batch_size=2, shuffle=False)
+# test_loader = DataLoader(test_dataset, batch_size=2, shuffle=False)
 
 class Net(torch.nn.Module):
     def __init__(self):
