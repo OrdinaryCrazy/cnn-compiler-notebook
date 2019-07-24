@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 # coding: utf-8
 
-# In[19]:
+# In[1]:
 
 
 import torch_geometric as pyg
@@ -11,6 +11,7 @@ import torch.nn.functional as F
 import matplotlib
 import matplotlib.pyplot as plt
 import pandas as pd
+import numpy as np
 
 from pandas import DataFrame
 from torch_geometric.data import DataLoader
@@ -18,7 +19,7 @@ from torch_geometric.datasets import PPI
 from torch_geometric.nn import GCNConv
 
 
-# In[20]:
+# In[2]:
 
 
 # path = osp.join(osp.dirname(osp.realpath(__file__)), '..', 'data', 'PPI')
@@ -34,7 +35,7 @@ validation_loader = DataLoader(validation_dataset, batch_size=2, shuffle=False)
 test_loader       = DataLoader(test_dataset, batch_size=2, shuffle= False)
 
 
-# In[21]:
+# In[3]:
 
 
 intrain = True
@@ -42,8 +43,8 @@ intrain = True
 class testNet(torch.nn.Module):
     def __init__(self):
         super(testNet, self).__init__()
-        self.conv1 = GCNConv(train_dataset.num_features, 16)
-        self.conv2 = GCNConv(16, train_dataset.num_classes)
+        self.conv1 = GCNConv(train_dataset.num_features, 256)
+        self.conv2 = GCNConv(256, train_dataset.num_classes)
     def forward(self, x, edge_index):
         x = self.conv1(x, edge_index)
         x = F.leaky_relu(x)
@@ -53,7 +54,7 @@ class testNet(torch.nn.Module):
         return x
 
 
-# In[22]:
+# In[4]:
 
 
 device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
@@ -62,33 +63,38 @@ loss_op = torch.nn.BCEWithLogitsLoss()
 optimizer = torch.optim.Adam(model.parameters(), lr=0.005)
 
 
-# In[77]:
+# In[5]:
 
 
 def train():
     model.train()
     totalTrainLoss = 0.0
-    gcn_PPI_profile = DataFrame(columns=['node_num',
-                                     'edge_num',
-                                     'in_channels', 
-                                     'out_channels',
-                                     'agg_time',
-                                     'map_time'
-                                    ]
+    gcn_PPI_profile = DataFrame(columns=['node_num', 'edge_num', 'max_degree',
+                                    'conv1_in_channels', 'conv1_out_channels', 
+                                    'conv2_in_channels', 'conv2_out_channels', 
+                                    'conv1_agg_time', 'conv1_map_time',
+                                    'conv2_agg_time', 'conv2_map_time'
+                                   ]
                            )
     for batch in train_loader:
         batch = batch.to(device)
         totalAggTime = 0.0
         totalMapTime = 0.0
-        for epoch in range(1, 101):
+        totalAggTime_2 = 0.0
+        totalMapTime_2 = 0.0
+        for epoch in range(1, 51):
             x, edge_index = batch.x, batch.edge_index
             num_graphs = batch.num_graphs
             optimizer.zero_grad()
             pred = model(x, edge_index)
             loss = loss_op(pred, batch.y)
             totalTrainLoss += loss.item() * num_graphs
+            
             totalAggTime += model.conv1.aggregateTime
             totalMapTime += model.conv1.mappingTime
+            totalAggTime_2 += model.conv2.aggregateTime
+            totalMapTime_2 += model.conv2.mappingTime
+            
             loss.backward()
             optimizer.step()
 #         log = 'batch_node_num:{:d}, batch_edge_num:{:d}, Loss:{:f}, Agg_time:{:f}, Map_time:{:f}'
@@ -100,17 +106,25 @@ def train():
 #                             model.conv1.mappingTime * 1e6
 #                         )
 #              )
-        result = DataFrame([[batch.x.shape[0], batch.edge_index[0].shape[0], 
-                             model.conv1.in_channels, model.conv1.out_channels, 
-                             totalAggTime / 100 * 1e6, totalMapTime / 100 * 1e6
+        result = DataFrame([[batch.x.shape[0], batch.edge_index[0].shape[0],
+                             np.max(np.bincount(batch.edge_index[0].cpu())),
+                             model.conv1.in_channels, model.conv1.out_channels,
+                             model.conv2.in_channels, model.conv2.out_channels,
+                             totalAggTime / 50 * 1e6, totalMapTime / 50 * 1e6,
+                             totalAggTime_2 / 50 * 1e6, totalMapTime_2 / 50 * 1e6
                             ]],
-                           columns=['node_num', 'edge_num', 'in_channels', 'out_channels', 'agg_time', 'map_time']
+                           columns=['node_num', 'edge_num', 'max_degree',
+                                    'conv1_in_channels', 'conv1_out_channels', 
+                                    'conv2_in_channels', 'conv2_out_channels', 
+                                    'conv1_agg_time', 'conv1_map_time',
+                                    'conv2_agg_time', 'conv2_map_time'
+                                   ]
                           )
         gcn_PPI_profile = gcn_PPI_profile.append(result)
     return totalTrainLoss/len(train_loader.dataset), gcn_PPI_profile
 
 
-# In[78]:
+# In[6]:
 
 
 # gcn_PPI_profile = DataFrame(columns=['node_num',
@@ -128,7 +142,7 @@ _, gcn_PPI_profile = train()
 gcn_PPI_profile.to_csv("./gcn_PPI_profile.csv")
 
 
-# In[79]:
+# In[12]:
 
 
 # CoraProfile = pd.read_excel("../gcn_Cora_profile.xlsx")
@@ -137,14 +151,16 @@ gcn_PPI_profile.to_csv("./gcn_PPI_profile.csv")
 PPIProfile = pd.read_csv("./gcn_PPI_profile.csv")
 
 
-# In[80]:
+# In[13]:
 
 
-PPIProfile['mapx'] = PPIProfile['node_num'] * PPIProfile['in_channels'] * PPIProfile['out_channels']
-PPIProfile['aggx'] = PPIProfile['edge_num'] * PPIProfile['out_channels']
+PPIProfile['conv1_mapx'] = PPIProfile['node_num'] * PPIProfile['conv1_in_channels'] * PPIProfile['conv1_out_channels']
+PPIProfile['conv1_aggx'] = PPIProfile['edge_num'] * PPIProfile['conv1_out_channels']
+PPIProfile['conv2_mapx'] = PPIProfile['node_num'] * PPIProfile['conv2_in_channels'] * PPIProfile['conv2_out_channels']
+PPIProfile['conv2_aggx'] = PPIProfile['edge_num'] * PPIProfile['conv2_out_channels']
 
 
-# In[81]:
+# In[14]:
 
 
 
@@ -160,30 +176,58 @@ PPIProfile['aggx'] = PPIProfile['edge_num'] * PPIProfile['out_channels']
 #          label = "PubMed_agg_time n_v_aver = 9, d = 500")
 # plt.plot(PubMedProfile.epoch, PubMedProfile.map_time, color = "blue", linestyle = "-", 
 #          label = "PubMed_map_time n_v_aver = 9, d = 500")
-gs = matplotlib.gridspec.GridSpec(1,2) 
+gs = matplotlib.gridspec.GridSpec(2,3) 
 fig = plt.figure(figsize=(15,10))
 
-map_plot = fig.add_subplot(gs[0])
-map_plot.set_title("map_time")
-map_plot.scatter(PPIProfile['mapx'], PPIProfile['map_time'], color = 'red')
-map_plot.set_xlabel("n * d * d\'")
-map_plot.set_ylabel("us")
-map_plot.set_ylim(0, 300) 
+conv1_map_plot = fig.add_subplot(gs[0])
+conv1_map_plot.set_title("conv1_map_time")
+conv1_map_plot.scatter(PPIProfile['conv1_mapx'], PPIProfile['conv1_map_time'], color = 'red')
+conv1_map_plot.set_xlabel("n * d * d\'")
+conv1_map_plot.set_ylabel("us")
+conv1_map_plot.set_ylim(0, 300) 
 
-agg_plot = fig.add_subplot(gs[1])
-agg_plot.set_title("agg_time")
-agg_plot.scatter(PPIProfile['aggx'], PPIProfile['agg_time'], color='blue')
-agg_plot.set_xlabel("E * d")
-agg_plot.set_ylabel("us")
-agg_plot.set_ylim(0, 300) 
+conv1_agg_plot = fig.add_subplot(gs[1])
+conv1_agg_plot.set_title("conv1_agg_time")
+conv1_agg_plot.scatter(PPIProfile['conv1_aggx'], PPIProfile['conv1_agg_time'], color='red')
+conv1_agg_plot.set_xlabel("E * d\'")
+conv1_agg_plot.set_ylabel("us")
+conv1_agg_plot.set_ylim(0, 300)
 
+conv1_md_agg_plot = fig.add_subplot(gs[2])
+conv1_md_agg_plot.set_title("conv1_agg_time")
+conv1_md_agg_plot.scatter(PPIProfile['max_degree'], PPIProfile['conv1_agg_time'], color='blue')
+conv1_md_agg_plot.set_xlabel("max_degree")
+conv1_md_agg_plot.set_ylabel("us")
+conv1_md_agg_plot.set_ylim(0, 300) 
+
+
+conv2_map_plot = fig.add_subplot(gs[3])
+conv2_map_plot.set_title("conv2_map_time")
+conv2_map_plot.scatter(PPIProfile['conv2_mapx'], PPIProfile['conv2_map_time'], color = 'green')
+conv2_map_plot.set_xlabel("n * d * d\'")
+conv2_map_plot.set_ylabel("us")
+conv2_map_plot.set_ylim(0, 300) 
+
+conv2_agg_plot = fig.add_subplot(gs[4])
+conv2_agg_plot.set_title("conv2_agg_time")
+conv2_agg_plot.scatter(PPIProfile['conv2_aggx'], PPIProfile['conv2_agg_time'], color='green')
+conv2_agg_plot.set_xlabel("E * d\'")
+conv2_agg_plot.set_ylabel("us")
+conv2_agg_plot.set_ylim(0, 300) 
+
+conv2_md_agg_plot = fig.add_subplot(gs[5])
+conv2_md_agg_plot.set_title("conv2_agg_time")
+conv2_md_agg_plot.scatter(PPIProfile['max_degree'], PPIProfile['conv2_agg_time'], color='blue')
+conv2_md_agg_plot.set_xlabel("max_degree")
+conv2_md_agg_plot.set_ylabel("us")
+conv2_md_agg_plot.set_ylim(0, 300) 
 # plt.ylabel("us")
 plt.legend(loc='upper right')
 plt.savefig("../ppi_plot.png")
 
 
-# In[ ]:
+# In[10]:
 
 
-
+np.max(np.bincount(train_dataset.data.edge_index[0]))
 
