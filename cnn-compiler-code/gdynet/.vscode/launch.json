@@ -1,0 +1,22 @@
+{
+    // Use IntelliSense to learn about possible attributes.
+    // Hover to view descriptions of existing attributes.
+    // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "name": "Python: 当前文件",
+            "type": "python",
+            "request": "launch",
+            "program": "/home/zjt/gdynet/main.py",
+            "console": "integratedTerminal",
+            "args": [
+                "--train-flist", "data/li2s-traj-graph-train.npz",
+                "--val-flist", "data/li2s-traj-graph-val.npz",
+                "--test-flist", "data/li2s-traj-graph-test.npz" ,
+                "--mode", "direct", 
+                "--job-dir", "data/training/"
+            ]
+        }
+    ]
+}
