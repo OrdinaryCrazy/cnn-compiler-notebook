@@ -65,7 +65,7 @@ y = torch.tensor([0, 1, 0, 1], dtype=torch.float)
 ## How to build a graph?
 
 ```python
-mport torch
+import torch
 from torch_geometric.data import Data
 
 x = torch.tensor([[2,1], [5,6], [3,7], [12,0]], dtype=torch.float)
