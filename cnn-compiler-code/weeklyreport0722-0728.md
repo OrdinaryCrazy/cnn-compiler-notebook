@@ -2,13 +2,16 @@
 
 >   Jingtun ZHANG
 
-## Work and Progress
+**WHERE WE ARE**:
 
+<img src="./figures/summer_intern.png" width="600px" height="800px" />
+
+## Work and Progress
 1.   Reimplementation of [HAG][4]:
      
      1.    Understanding of the model:
      
-          
+     ​     ![HAG](figures/HAG.png)
      
      2.    Idea of redundancy computation: build node-pair heap every iteration in HAG building process --> O(VlogV)
      
