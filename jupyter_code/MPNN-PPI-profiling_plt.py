@@ -54,16 +54,17 @@ class testNet(torch.nn.Module):
         return x
 
 
-# In[4]:
+# In[11]:
 
 
-device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
+# device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
+device = torch.device('cpu')
 model = testNet().to(device)
 loss_op = torch.nn.BCEWithLogitsLoss()
 optimizer = torch.optim.Adam(model.parameters(), lr=0.005)
 
 
-# In[5]:
+# In[12]:
 
 
 def train():
@@ -82,7 +83,7 @@ def train():
         totalMapTime = 0.0
         totalAggTime_2 = 0.0
         totalMapTime_2 = 0.0
-        for epoch in range(1, 51):
+        for epoch in range(1, 11):
             x, edge_index = batch.x, batch.edge_index
             num_graphs = batch.num_graphs
             optimizer.zero_grad()
@@ -110,8 +111,8 @@ def train():
                              np.max(np.bincount(batch.edge_index[0].cpu())),
                              model.conv1.in_channels, model.conv1.out_channels,
                              model.conv2.in_channels, model.conv2.out_channels,
-                             totalAggTime / 50 * 1e6, totalMapTime / 50 * 1e6,
-                             totalAggTime_2 / 50 * 1e6, totalMapTime_2 / 50 * 1e6
+                             totalAggTime / 10 * 1e6, totalMapTime / 10 * 1e6,
+                             totalAggTime_2 / 10 * 1e6, totalMapTime_2 / 10 * 1e6
                             ]],
                            columns=['node_num', 'edge_num', 'max_degree',
                                     'conv1_in_channels', 'conv1_out_channels', 
@@ -124,7 +125,7 @@ def train():
     return totalTrainLoss/len(train_loader.dataset), gcn_PPI_profile
 
 
-# In[6]:
+# In[13]:
 
 
 # gcn_PPI_profile = DataFrame(columns=['node_num',
@@ -142,7 +143,7 @@ _, gcn_PPI_profile = train()
 gcn_PPI_profile.to_csv("./gcn_PPI_profile.csv")
 
 
-# In[12]:
+# In[14]:
 
 
 # CoraProfile = pd.read_excel("../gcn_Cora_profile.xlsx")
@@ -151,7 +152,7 @@ gcn_PPI_profile.to_csv("./gcn_PPI_profile.csv")
 PPIProfile = pd.read_csv("./gcn_PPI_profile.csv")
 
 
-# In[13]:
+# In[15]:
 
 
 PPIProfile['conv1_mapx'] = PPIProfile['node_num'] * PPIProfile['conv1_in_channels'] * PPIProfile['conv1_out_channels']
@@ -160,7 +161,7 @@ PPIProfile['conv2_mapx'] = PPIProfile['node_num'] * PPIProfile['conv2_in_channel
 PPIProfile['conv2_aggx'] = PPIProfile['edge_num'] * PPIProfile['conv2_out_channels']
 
 
-# In[14]:
+# In[17]:
 
 
 
@@ -184,21 +185,21 @@ conv1_map_plot.set_title("conv1_map_time")
 conv1_map_plot.scatter(PPIProfile['conv1_mapx'], PPIProfile['conv1_map_time'], color = 'red')
 conv1_map_plot.set_xlabel("n * d * d\'")
 conv1_map_plot.set_ylabel("us")
-conv1_map_plot.set_ylim(0, 300) 
+conv1_map_plot.set_ylim(0, 300000) 
 
 conv1_agg_plot = fig.add_subplot(gs[1])
 conv1_agg_plot.set_title("conv1_agg_time")
 conv1_agg_plot.scatter(PPIProfile['conv1_aggx'], PPIProfile['conv1_agg_time'], color='red')
 conv1_agg_plot.set_xlabel("E * d\'")
 conv1_agg_plot.set_ylabel("us")
-conv1_agg_plot.set_ylim(0, 300)
+conv1_agg_plot.set_ylim(0, 300000)
 
 conv1_md_agg_plot = fig.add_subplot(gs[2])
 conv1_md_agg_plot.set_title("conv1_agg_time")
 conv1_md_agg_plot.scatter(PPIProfile['max_degree'], PPIProfile['conv1_agg_time'], color='blue')
 conv1_md_agg_plot.set_xlabel("max_degree")
 conv1_md_agg_plot.set_ylabel("us")
-conv1_md_agg_plot.set_ylim(0, 300) 
+conv1_md_agg_plot.set_ylim(0, 300000) 
 
 
 conv2_map_plot = fig.add_subplot(gs[3])
@@ -206,24 +207,24 @@ conv2_map_plot.set_title("conv2_map_time")
 conv2_map_plot.scatter(PPIProfile['conv2_mapx'], PPIProfile['conv2_map_time'], color = 'green')
 conv2_map_plot.set_xlabel("n * d * d\'")
 conv2_map_plot.set_ylabel("us")
-conv2_map_plot.set_ylim(0, 300) 
+conv2_map_plot.set_ylim(0, 300000) 
 
 conv2_agg_plot = fig.add_subplot(gs[4])
 conv2_agg_plot.set_title("conv2_agg_time")
 conv2_agg_plot.scatter(PPIProfile['conv2_aggx'], PPIProfile['conv2_agg_time'], color='green')
 conv2_agg_plot.set_xlabel("E * d\'")
 conv2_agg_plot.set_ylabel("us")
-conv2_agg_plot.set_ylim(0, 300) 
+conv2_agg_plot.set_ylim(0, 300000) 
 
 conv2_md_agg_plot = fig.add_subplot(gs[5])
 conv2_md_agg_plot.set_title("conv2_agg_time")
 conv2_md_agg_plot.scatter(PPIProfile['max_degree'], PPIProfile['conv2_agg_time'], color='blue')
 conv2_md_agg_plot.set_xlabel("max_degree")
 conv2_md_agg_plot.set_ylabel("us")
-conv2_md_agg_plot.set_ylim(0, 300) 
+conv2_md_agg_plot.set_ylim(0, 300000) 
 # plt.ylabel("us")
 plt.legend(loc='upper right')
-plt.savefig("../ppi_plot.png")
+plt.savefig("../ppi_plot_cpu.png")
 
 
 # In[10]:
