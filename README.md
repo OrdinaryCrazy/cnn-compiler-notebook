@@ -13,3 +13,29 @@
 7.   The Productive Programmer
 8.   How to Solve it
 9.   Cosmos
+
+# 模板：
+
+# title
+
+paper: []
+
+code: []
+
+## Important Concepts:
+
+
+
+## Key Idea:
+
+
+
+## Problem definition:
+
+
+
+## Precessed Work:
+
+## sMetrix gain:
+
+## Challenge:
