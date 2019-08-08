@@ -1,10 +1,10 @@
-Weekly Report 2019.07.22-2019.07.28
+# Weekly Report 2019.07.22-2019.07.28
 
 >   Jingtun ZHANG
 
 **WHERE WE ARE**:
 
-<img src="./figures/summer_intern.png" width="600px" height="1200px" />
+<img src="./figures/summer_intern.png" width="400px" height="700px" />
 
 ## Work and Progress
 1.   Reimplementation of [HAG][4]:
@@ -42,9 +42,9 @@ Weekly Report 2019.07.22-2019.07.28
      
          *   object:
      
-         
+         ![](figures/computation and topology.png)
      
-         *   every new node heap building:
+         *   every iteration new node-pair heap building:
              *   one node pair redundancy computation: O(V)
              *   all node pairs redundancy computation: O(V^2) * O (V)
              *   heap building: O(logV)
