@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?><module codename="org.gephi.ui.library.wrapper">
+    <module_version install_time="1506252142579" last="true" origin="installer" specification_version="0.9.2">
+        <file crc="2498837548" name="config/Modules/org-gephi-ui-library-wrapper.xml"/>
+        <file crc="648259997" name="modules/ext/org.gephi.ui-library-wrapper/com-connectina-swing/fontchooser.jar"/>
+        <file crc="1356408428" name="modules/ext/org.gephi.ui-library-wrapper/com-github-insubstantial/flamingo.jar"/>
+        <file crc="2832683878" name="modules/ext/org.gephi.ui-library-wrapper/com-github-insubstantial/trident-swing.jar"/>
+        <file crc="385887944" name="modules/ext/org.gephi.ui-library-wrapper/com-miglayout/miglayout.jar"/>
+        <file crc="660311182" name="modules/ext/org.gephi.ui-library-wrapper/net-java-dev/colorchooser.jar"/>
+        <file crc="331990583" name="modules/ext/org.gephi.ui-library-wrapper/net-java-dev/timingframework.jar"/>
+        <file crc="826192464" name="modules/ext/org.gephi.ui-library-wrapper/org-jdesktop/beansbinding.jar"/>
+        <file crc="2972848508" name="modules/ext/org.gephi.ui-library-wrapper/org-swinglabs-swingx/swingx-all.jar"/>
+        <file crc="2812627069" name="modules/org-gephi-ui-library-wrapper.jar"/>
+    </module_version>
+</module>

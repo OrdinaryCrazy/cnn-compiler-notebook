@@ -20,8 +20,7 @@ class HandleNodeAttention(object):
 
 transform = T.Compose([HandleNodeAttention(), T.OneHotDegree(max_degree=14)])
 path = osp.join(osp.dirname(osp.realpath(__file__)), '..', 'data', 'TRIANGLES')
-dataset = TUDataset(path, name='TRIANGLES', use_node_attr=True,
-                    transform=transform)
+dataset = TUDataset(path, name='TRIANGLES', use_node_attr=True,transform=transform)
 
 train_loader = DataLoader(dataset[:30000], batch_size=60, shuffle=True)
 val_loader = DataLoader(dataset[30000:35000], batch_size=60)
@@ -44,19 +43,16 @@ class Net(torch.nn.Module):
         x, edge_index, batch = data.x, data.edge_index, data.batch
 
         x = F.relu(self.conv1(x, edge_index))
-        x, edge_index, _, batch, perm, score = self.pool1(
-            x, edge_index, None, batch)
+        x, edge_index, _, batch, perm, score = self.pool1(x, edge_index, None, batch)
         x = F.relu(self.conv2(x, edge_index))
-        x, edge_index, _, batch, perm, score = self.pool2(
-            x, edge_index, None, batch)
+        x, edge_index, _, batch, perm, score = self.pool2(x, edge_index, None, batch)
         ratio = x.size(0) / data.x.size(0)
 
         x = F.relu(self.conv3(x, edge_index))
         x = global_max_pool(x, batch)
         x = self.lin(x).view(-1)
 
-        attn_loss = F.kl_div(
-            torch.log(score + 1e-14), data.attn[perm], reduction='none')
+        attn_loss = F.kl_div(torch.log(score + 1e-14), data.attn[perm], reduction='none')
         attn_loss = scatter_mean(attn_loss, batch)
 
         return x, attn_loss, ratio

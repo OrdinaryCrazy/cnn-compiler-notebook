@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?><module codename="org.gephi.project.api">
+    <module_version install_time="1506252139089" last="true" origin="installer" specification_version="0.9.2">
+        <file crc="3457933315" name="config/Modules/org-gephi-project-api.xml"/>
+        <file crc="4025629342" name="modules/org-gephi-project-api.jar"/>
+    </module_version>
+</module>
