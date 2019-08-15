@@ -8,4 +8,7 @@
     * [learn-tensorflow](GNN/learn-tensorflow.md)
     * [paper-reading: Tigr](GNN/tigr.md)
     * [paper-reading: fast-training of sparse gnn on dense hardware](GNN/fast-training of sparse gnn on dense hardware.md)
+    * [paper-reading: GCN](GNN/GCN.md)
+    * [paper-reading: TopK](GNN/topk_pooling.md)
+    * [paper-reading: Sag](GNN/sag_pooling.md)
 

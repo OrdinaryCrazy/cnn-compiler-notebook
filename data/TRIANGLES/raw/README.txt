@@ -1,4 +1,10 @@
-README for dataset TRIANGLES
+README for dataset FIRSTMM_DB
+
+
+=== Introduction ===
+
+This folder contains 1 dataset of undirected labeled and attributed graphs for 
+graph classification: FIRSTMM_DB.
 
 
 === Usage ===
@@ -29,7 +35,7 @@ N = number of graphs
 There are OPTIONAL files if the respective information is available:
 
 (5) 	DS_edge_labels.txt (m lines; same size as DS_A_sparse.txt)
-	labels for the edges in DS_A_sparse.txt 
+	labels for the edges in DD_A_sparse.txt 
 
 (6) 	DS_edge_attributes.txt (m lines; same size as DS_A.txt)
 	attributes for the edges in DS_A.txt 
@@ -42,23 +48,50 @@ There are OPTIONAL files if the respective information is available:
 	regression values for all graphs in the dataset,
 	the value in the i-th line is the attribute of the graph with graph_id i
 
-=== Description === 
 
-TRIANGLES is one of the synthetic datasets of randomly generated graphs (Knyazev et al., 2019).
-The task is to count triangles (3-node cliques) in a graph. 
-The dataset provides unnormalized attention values for each node in a graph in the 
-TRIANGLES_node_attributes.txt file, which denote to how many triangles a particular node belongs.
-The first 30000 graphs should be used for training, the next 5000 graphs for validation 
-and the last 10000 graphs for testing. 10000 test graphs consist of 2 different subsets with 5000 graphs in each. 
-The first test subset is similar to the training and validation sets and 
-the second test subset has larger graphs.
+=== Description of the dataset === 
+
+Node labels:
+
+ 1 'bottom'
+ 2 'middle'
+ 3 'top'
+ 4 'handle'
+ 5 'usable_are'
+
+Node attribute:
+  [first dimension]:
+  [change in curvature]
+	
+
+Edge attributes:
+  [first dimension, second dimension]:	
+  [distance between points, change in curvature]
 
 
-=== References ===
+Additional information: 
 
-@article{knyazev2019understanding,
-  title = {Understanding Attention and Generalization in Graph Neural Networks},
-  author = {Knyazev, Boris and Taylor, Graham W and Amer, Mohamed R},
-  journal = {arXiv preprint arXiv:1905.02850},
-  year = {2019}
-}
+FIRSTMM_DB_graph_list.txt: list of object names 
+(each line corresponds to one object in the same order as in graph_labels)
+
+FIRSTMM_DB_coordinates.txt: 3D coordinates
+
+FIRSTMM_DB_normals.txt: 3D normals (unit length); contains NaNs
+
+
+=== Previous Use of the Dataset ===
+
+Neumann, M., Garnett R., Bauckhage Ch., Kersting K.: Propagation Kernels: Efficient Graph 
+Kernels from Propagated Information. Under review at MLJ.
+
+M. Neumann, P. Moreno, L. Antanas, R. Garnett, K. Kersting. Graph Kernels for 
+Object Category Prediction in Task-Dependent Robot Grasping. Eleventh Workshop 
+on Mining and Learning with Graphs (MLG-13), Chicago, Illinois, USA, 2013.
+
+The original object database can be found here:
+http://www.first-mm.eu/data.html
+
+It is licensed under the Creative Commons Attribution-ShareAlike 3.0 Unported License 
+(http://creativecommons.org/licenses/by-sa/3.0/). 
+
+

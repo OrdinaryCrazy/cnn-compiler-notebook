@@ -36,6 +36,6 @@ code: []
 
 ## Precessed Work:
 
-## sMetrix gain:
+## Metrix gain:
 
 ## Challenge:
