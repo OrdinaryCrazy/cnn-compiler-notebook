@@ -4,7 +4,7 @@
 
 **WHERE WE ARE**:
 
-<img src="./figures/summer_intern.png" width="400px" height="800px" />
+<img src="./figures/summer_intern.png" width="400px" height="1200px" />
 
 ## Work and Progress
 1.     Paper-reading: Tigr, [note][1]
