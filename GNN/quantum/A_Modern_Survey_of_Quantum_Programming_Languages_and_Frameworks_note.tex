@@ -19,13 +19,88 @@
     \setcounter{secnumdepth}{0} %% no numbering
 %=========================================================================
     \section{A. Paper summary}
+    This paper try to propose a modern survey of Quantum Computing (QC) which:
+    \begin{enumerate}
+        \item Summarizing various aspects of quantum computing.
+        \item Emphasizing the advances in quantum computing programming language and compilation.
+        \item Focusing on the work in the last decade.
+    \end{enumerate}
+    \subsection{Content list:}
+        \subsubsection*{Introduction}
+            \begin{itemize}
+                \item Tremendous advances in QC
+                \item Compiler and Programming language contribution
+                \item Nowadays Quantum Programming Languages: haven't found the proper equivalent to a 
+                program statement of more traditional programming languages.
+                \item QPLs with abstractions and semantics near or at the level of the application domain are necessary.
+                \item Current proposed languages require further refinement before they can fully support QC algorithmic:
+                \begin{enumerate}
+                    \item Extremely low-level and do not leverage quantum application domain knowledge.
+                    \item Higher but can not offer abstractions and data types that best support correct and productive QC programming
+                \end{enumerate}
+            \end{itemize}
+        \subsubsection*{Background}
+            \begin{itemize}
+                \item High-performance application-specific accelerators, capable of making some currently-intractable
+                problems tractable. 
+                \item Qubits, superposition, measurement, entanglement, no-cloning.
+                \item Quantum state evolvement in time with unitary operators (program)
+                \item Compiler find an efficient circuit that is equivalent to input matrix by decomposing it into a 
+                sequence of simpler/smaller matrices. Obstacles:
+                    \begin{enumerate}
+                        \item The size and the structure of the matrix largely determines the number of factors.
+                        \item Decoherence: hard to deeper circuit and longer run time.
+                        \item Must-made approximation
+                    \end{enumerate}
+            \end{itemize}
+        \subsubsection*{Quantum Technologies}
+            \begin{itemize}
+                \item Decoherence problem
+                \item Quantum Error Correction (QEC) can not totally solve the decoherence problem and resource intensive.
+            \end{itemize}
+        \subsubsection*{Quantum Compilation Phases}
+            \begin{itemize}
+                \item Typical quantum compilation flow
+            \end{itemize}
+        \subsubsection*{Circuit Synthesis (for unitary operators)}
+            \begin{itemize}
+                \item Householder: from a unitary matrix to its triangular form by 2(n-1) square roots
+                \item Deutsch: almost all n-bit gates, n > 2, can represent any computing task
+                \item Barenco: universal unitary operations
+                \item \dots\dots
+            \end{itemize}
+        \subsubsection*{Quantum Programming Languages}
+            \begin{itemize}
+                \item OpenQASM: users declare classical and quantum registers, and apply gates to different
+                qubits to perform the task.
+                \item Scaffold: raise the level of abstraction to assembly level
+                \item Q\#: extension for C\#
+                \item ProjectQ: extension for Python
+                \item Still is a substantial semantic gap between the quantum domain and the state-of-the-art in quantum language.
+            \end{itemize}
+        \subsubsection*{Quantum Compiler Frameworks}
+            \begin{itemize}
+                \item Nowadays research has largely concentrated to extending classical imperative languages to enable
+                the manipulation of quantum gates.
+            \end{itemize}
 %=========================================================================
     \section{B. List of main strengths of the paper}
         \begin{itemize}
-            \item 
+            \item Given out an overview of almost all aspects of Quantum Computing
+            \item Described many vital research advances in the last decade
+            \item Detailed concrete idea of these works
         \end{itemize}
 %=========================================================================
     \section{C. List of major weaknesses of the paper}
+        \begin{itemize}
+            \item Without a clear outline for most sections, especially in section 5 and section 7
+            \item Just stacking the brief summary of the mentioned works without discussing their key idea, influence, 
+            reserved problems and relationship between each other
+            \item Did not show the evolvement of Quantum Computing and difference between long-past works and modern
+            important works
+            \item Did not give out the general definition of problems, basical knowledge and solution ideas in every
+            section, which confused me when I read stacked detail of the mentioned works
+        \end{itemize}
 %=========================================================================
     \section{D. Overall merit}
     \noindent Choices:\\
@@ -33,23 +108,27 @@
     \hspace*{2em}B. OK paper, but I will not champion it\\
     \hspace*{2em}C. Weak paper, though I will not fight strongly against it\\
     \hspace*{2em}D. Reject\\
-    My choice:
+    My choice: C
 %=========================================================================
     \section{E. Reviewer expertise}
     \noindent Choices:\\
     \hspace*{2em}X. I am an expert in this area\\
     \hspace*{2em}Y. I am knowledgeable in this area, but not an expert\\
     \hspace*{2em}Z. I am not an expert; my evaluation is that of an informed outsider\\
-    My choice:
+    My choice: Z
 %=========================================================================
     \section{F. How much time did you spend on reviewing the paper?}
     \noindent Choices:\\
     \hspace*{2em}1. Limited: I browsed through the paper quickly\\
     \hspace*{2em}2. Medium: I read through the paper but did not check the details\\
     \hspace*{2em}3. High: I read the paper thoroughly and carefully checked the technical details\\
-    My choice:
+    My choice: 2
 %=========================================================================
     \section{G. Short summary of your review explaining your overall merit score.}
+        A servey paper should at least give out the probelms of the domain it summarized, but in this paper I can 
+    not figure out what probelm so much research try to address. In addition, this paper did not show me the envolement  
+    of great ideas and crucial works in Quantum Computing, stacking of paper-summary can not give me a clear overview of 
+    modern Quantum Computing advances and future working directions.
 %=========================================================================
     \section{H. Novelty}
     \noindent Choices:\\
@@ -57,7 +136,7 @@
     \hspace*{2em}2. Incremental improvement\\
     \hspace*{2em}3. New contribution\\
     \hspace*{2em}4. Surprisingly new contribution\\
-    My choice:
+    My choice: 1
 %=========================================================================
     \section{I. Potential for impact}
     \noindent Choices:\\
@@ -66,7 +145,7 @@
     \hspace*{2em}3. Moderate impact: Will influence other efforts\\
     \hspace*{2em}4. High impact: Will have a major influence on other efforts\\
     \hspace*{2em}5. Foundational: Will open new areas of inquiry\\
-    My choice:
+    My choice: 2
 %=========================================================================
     \section{J. Writing quality}
     \noindent Choices:\\
@@ -75,7 +154,7 @@
     \hspace*{2em}3. Adequate\\
     \hspace*{2em}4. Well-written\\
     \hspace*{2em}5. Outstanding\\
-    My choice:
+    My choice: 2
 %=========================================================================
     \section{K. Best paper candidate}
     \noindent Do you feel that the paper is on par with or better thn the recent LCPC 
@@ -83,15 +162,23 @@
     Choices:\\
     \hspace*{2em}A. Yes.\\
     \hspace*{2em}B. No.\\
-    My choice:
+    My choice: B
 %=========================================================================
     \section{L. Questions for authors' response}
     Specific questions that coud affect your accept/reject decision. Remember that 
     the authors have limited space and must respond to all reviewers.
+    \begin{itemize}
+        \item What do you think as the great idea within these modern quantum computing works ?
+        \item Is there a evolving outline of these research ?
+        \item What are the basical concerns of modern quantum computing ?
+    \end{itemize}
 %=========================================================================
     \section{M. Comments to authors}
+        I think basical probelms definition and great ideas are more important than stacking modern research
+    works summary for a servey paper of modern quantum computing.
 %=========================================================================
     \section{N. Comments to PC}
+
 %=========================================================================
     \section{O. Declare concurrent work}
     \noindent Are you working on the exact same problem as this submission and 
@@ -102,7 +189,7 @@
     \hspace*{2em}3. Yes, paper submitted to LCPC 2020\\
     \hspace*{2em}4. Yes, paper submitted to another venue\\
     \hspace*{2em}5. Not sure\\
-    My choice:
+    My choice: 1
 %=========================================================================
     \section{P. Recommended reviewers for 2nd round}
 %=========================================================================

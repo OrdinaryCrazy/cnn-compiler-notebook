@@ -1,4 +1,4 @@
-This is XeTeX, Version 3.14159265-2.6-0.99999 (TeX Live 2019/dev/Debian) (preloaded format=xelatex 2019.5.3)  7 SEP 2019 17:22
+This is XeTeX, Version 3.14159265-2.6-0.99999 (TeX Live 2019/dev/Debian) (preloaded format=xelatex 2019.5.3)  9 SEP 2019 20:27
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
@@ -533,14 +533,14 @@ LaTeX Font Info:    External font `cmex10' loaded for size
 (Font)              <6> on input line 18.
 [1
 
-] [2] [3] (./A_Modern_Survey_of_Quantum_Programming_Languages_and_Frameworks_note.aux) ) 
+] [2] [3] [4] [5] (./A_Modern_Survey_of_Quantum_Programming_Languages_and_Frameworks_note.aux) ) 
 Here is how much of TeX's memory you used:
- 16251 strings out of 492912
- 380429 string characters out of 6134894
- 461656 words of memory out of 5000000
- 20207 multiletter control sequences out of 15000+600000
- 535308 words of font info for 50 fonts, out of 8000000 for 9000
+ 16254 strings out of 492912
+ 380515 string characters out of 6134894
+ 463656 words of memory out of 5000000
+ 20208 multiletter control sequences out of 15000+600000
+ 535316 words of font info for 51 fonts, out of 8000000 for 9000
  1348 hyphenation exceptions out of 8191
  56i,6n,74p,470b,446s stack positions out of 5000i,500n,10000p,200000b,80000s
 
-Output written on A_Modern_Survey_of_Quantum_Programming_Languages_and_Frameworks_note.pdf (3 pages).
+Output written on A_Modern_Survey_of_Quantum_Programming_Languages_and_Frameworks_note.pdf (5 pages).
