@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?><module codename="org.gephi.db.drivers">
+    <module_version install_time="1506252139872" last="true" origin="installer" specification_version="0.9.2">
+        <file crc="1254818683" name="config/Modules/org-gephi-db-drivers.xml"/>
+        <file crc="857722219" name="modules/ext/org.gephi.db-drivers/com-microsoft-sqlserver/mssql-jdbc.jar"/>
+        <file crc="305726764" name="modules/ext/org.gephi.db-drivers/mysql/mysql-connector-java.jar"/>
+        <file crc="2001612916" name="modules/ext/org.gephi.db-drivers/org-postgresql/postgresql.jar"/>
+        <file crc="1022084794" name="modules/ext/org.gephi.db-drivers/org-xerial/sqlite-jdbc.jar"/>
+        <file crc="1989621592" name="modules/org-gephi-db-drivers.jar"/>
+    </module_version>
+</module>

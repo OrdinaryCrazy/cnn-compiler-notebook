@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?><module codename="org.gephi.io.importer.plugin">
+    <module_version install_time="1506252142007" last="true" origin="installer" specification_version="0.9.2">
+        <file crc="3694370859" name="config/Modules/org-gephi-io-importer-plugin.xml"/>
+        <file crc="665802104" name="modules/ext/org.gephi.io-importer-plugin/com-github-virtuald/curvesapi.jar"/>
+        <file crc="122887306" name="modules/ext/org.gephi.io-importer-plugin/org-apache-commons/commons-collections4.jar"/>
+        <file crc="1028684868" name="modules/ext/org.gephi.io-importer-plugin/org-apache-poi/poi-ooxml-schemas.jar"/>
+        <file crc="487901719" name="modules/ext/org.gephi.io-importer-plugin/org-apache-poi/poi-ooxml.jar"/>
+        <file crc="4078650114" name="modules/ext/org.gephi.io-importer-plugin/org-apache-poi/poi.jar"/>
+        <file crc="3885702182" name="modules/ext/org.gephi.io-importer-plugin/org-apache-xmlbeans/xmlbeans.jar"/>
+        <file crc="718358633" name="modules/ext/org.gephi.io-importer-plugin/stax/stax-api.jar"/>
+        <file crc="2247279177" name="modules/org-gephi-io-importer-plugin.jar"/>
+    </module_version>
+</module>

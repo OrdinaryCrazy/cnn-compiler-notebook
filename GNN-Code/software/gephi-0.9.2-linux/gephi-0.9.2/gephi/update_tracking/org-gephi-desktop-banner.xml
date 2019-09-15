@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?><module codename="org.gephi.desktop.banner">
+    <module_version install_time="1506252142161" last="true" origin="installer" specification_version="0.9.2">
+        <file crc="3797697364" name="config/Modules/org-gephi-desktop-banner.xml"/>
+        <file crc="2924018007" name="modules/org-gephi-desktop-banner.jar"/>
+    </module_version>
+</module>

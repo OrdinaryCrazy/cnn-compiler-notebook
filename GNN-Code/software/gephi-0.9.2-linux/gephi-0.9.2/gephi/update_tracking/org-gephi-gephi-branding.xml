@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?><module codename="org.gephi.gephi.branding">
+    <module_version install_time="1506252137467" last="true" origin="installer" specification_version="0.9.2">
+        <file crc="4219555438" name="config/Modules/org-gephi-gephi-branding.xml"/>
+        <file crc="1753785225" name="core/locale/core_gephi.jar"/>
+        <file crc="1202875908" name="modules/locale/org-netbeans-core-windows_gephi.jar"/>
+        <file crc="2794502277" name="modules/locale/org-netbeans-core_gephi.jar"/>
+        <file crc="1486408341" name="modules/org-gephi-gephi-branding.jar"/>
+    </module_version>
+</module>

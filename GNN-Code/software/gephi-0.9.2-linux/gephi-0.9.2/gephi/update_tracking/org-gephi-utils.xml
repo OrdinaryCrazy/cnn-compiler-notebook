@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?><module codename="org.gephi.utils">
+    <module_version install_time="1506252139696" last="true" origin="installer" specification_version="0.9.2">
+        <file crc="3462785050" name="config/Modules/org-gephi-utils.xml"/>
+        <file crc="1430677766" name="modules/org-gephi-utils.jar"/>
+    </module_version>
+</module>

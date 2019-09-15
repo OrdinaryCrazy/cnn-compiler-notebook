@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?><module codename="org.gephi.batik.wrapper">
+    <module_version install_time="1506252139600" last="true" origin="installer" specification_version="0.9.2">
+        <file crc="3608230362" name="config/Modules/org-gephi-batik-wrapper.xml"/>
+        <file crc="11779099" name="modules/ext/org.gephi.batik-wrapper/commons-io/commons-io.jar"/>
+        <file crc="3420158953" name="modules/ext/org.gephi.batik-wrapper/commons-logging/commons-logging.jar"/>
+        <file crc="3916703663" name="modules/ext/org.gephi.batik-wrapper/org-apache-xmlgraphics/batik-anim.jar"/>
+        <file crc="2677185097" name="modules/ext/org.gephi.batik-wrapper/org-apache-xmlgraphics/batik-awt-util.jar"/>
+        <file crc="2898360759" name="modules/ext/org.gephi.batik-wrapper/org-apache-xmlgraphics/batik-bridge.jar"/>
+        <file crc="3173508500" name="modules/ext/org.gephi.batik-wrapper/org-apache-xmlgraphics/batik-constants.jar"/>
+        <file crc="2499300252" name="modules/ext/org.gephi.batik-wrapper/org-apache-xmlgraphics/batik-css.jar"/>
+        <file crc="1656010394" name="modules/ext/org.gephi.batik-wrapper/org-apache-xmlgraphics/batik-dom.jar"/>
+        <file crc="4172538631" name="modules/ext/org.gephi.batik-wrapper/org-apache-xmlgraphics/batik-ext.jar"/>
+        <file crc="667992150" name="modules/ext/org.gephi.batik-wrapper/org-apache-xmlgraphics/batik-gvt.jar"/>
+        <file crc="4242774279" name="modules/ext/org.gephi.batik-wrapper/org-apache-xmlgraphics/batik-i18n.jar"/>
+        <file crc="120731838" name="modules/ext/org.gephi.batik-wrapper/org-apache-xmlgraphics/batik-parser.jar"/>
+        <file crc="2866512484" name="modules/ext/org.gephi.batik-wrapper/org-apache-xmlgraphics/batik-script.jar"/>
+        <file crc="3516485460" name="modules/ext/org.gephi.batik-wrapper/org-apache-xmlgraphics/batik-svg-dom.jar"/>
+        <file crc="2053717863" name="modules/ext/org.gephi.batik-wrapper/org-apache-xmlgraphics/batik-svggen.jar"/>
+        <file crc="1370604191" name="modules/ext/org.gephi.batik-wrapper/org-apache-xmlgraphics/batik-transcoder.jar"/>
+        <file crc="2783296299" name="modules/ext/org.gephi.batik-wrapper/org-apache-xmlgraphics/batik-util.jar"/>
+        <file crc="1317996151" name="modules/ext/org.gephi.batik-wrapper/org-apache-xmlgraphics/batik-xml.jar"/>
+        <file crc="3718552314" name="modules/ext/org.gephi.batik-wrapper/org-apache-xmlgraphics/xmlgraphics-commons.jar"/>
+        <file crc="3959464191" name="modules/ext/org.gephi.batik-wrapper/xalan/serializer.jar"/>
+        <file crc="2356488793" name="modules/ext/org.gephi.batik-wrapper/xalan/xalan.jar"/>
+        <file crc="2268634152" name="modules/ext/org.gephi.batik-wrapper/xml-apis/xml-apis-ext.jar"/>
+        <file crc="631313642" name="modules/org-gephi-batik-wrapper.jar"/>
+    </module_version>
+</module>
