@@ -1,6 +1,6 @@
 # Introduction
 
-This is a repository of Jingtun ZHANG’s 2019 summer intern @University of California Santa Barbara
+This is a repository of Jingtun ZHANG’s 2019 summer intern @[University of California Santa Barbara](https://ucsb.edu)
 
 >   Paper reading note can be found at [Github link](https://github.com/OrdinaryCrazy/cnn-compiler-notebook/tree/master/paper-reading-note)
 >
@@ -8,24 +8,28 @@ This is a repository of Jingtun ZHANG’s 2019 summer intern @University of Cali
 >
 >   Weekly report can be found at [Github link](https://github.com/OrdinaryCrazy/cnn-compiler-notebook/tree/master/weekly-report)
 
+# Table of Content
+
+[TOC]
+
 # Graph Neural Network Survey
 
 ## Background
 
 ### Origin GNN
 
-**Target problem**: learn a state embedding $$ \mathbf{h}_v\in \mathbb{R}^{s}$$ for each node
+**Target problem**: learn a state embedding $ \mathbf{h}_v\in \mathbb{R}^{s}$ for each node
 
 **Traditional procedure**:
 
->   $$\mathbf{h}_{v} = f(\mathbf{x}_v,edge\_attr_v,\mathbf{h}_u,\mathbf{x}_u)$$
->   $$u$$ means neighbors of $$v$$, $$f$$ is local parameterized transition function
->   $$\mathbf{o}_v = g(\mathbf{h}_v, \mathbf{x}_v)$$
->  $$g$$ is local output function
+>   $\mathbf{h}_{v} = f(\mathbf{x}_v,edge\_attr_v,\mathbf{h}_u,\mathbf{x}_u)$
+>   $u$ means neighbors of $v$, $f$ is local parameterized transition function
+>   $\mathbf{o}_v = g(\mathbf{h}_v, \mathbf{x}_v)$
+>   $g$ is local output function
 
 **Typical loss**:
 
-> $$loss = \sum_{i = 1}^{p}(target_i - output_i)$$
+>   $loss = \sum_{i = 1}^{p}(target_i - output_i)$
 
 Details can be found at [Github link](https://github.com/OrdinaryCrazy/cnn-compiler-notebook/blob/master/Studying%20Note/README.md)
 
@@ -56,16 +60,29 @@ $W^{(l)}$: layer-specific trainable weight matrix
 $\sigma(\cdot)$:  activation function
 $H^{(l)} \in \mathbb{R}^{N \times D}$: the matirx of activations in the $l^{th}$ layer, $H^{(0)} = X$
 
-Details can be found at [Github link]([https://github.com/OrdinaryCrazy/cnn-compiler-notebook/blob/master/Studying%20Note/GCN.md](https://github.com/OrdinaryCrazy/cnn-compiler-notebook/blob/master/Studying Note/GCN.md)
+Details can be found at [Github link](https://github.com/OrdinaryCrazy/cnn-compiler-notebook/blob/master/Studying Note/GCN.md)
 
-### Why GNN
+###  Why GNN from CNN
 
-
+1.   Graphs are the most typical locally connected structure
+2.   Share weights reduce the computational cost compared with traditional spectral graph theory
+3.   Multilayer structure is the key to deal with hierarchical patterns, which captures the featuofres of various sizes
+4.   CNNs or RNNs need a specific order, but there is no natural order of nodes in graph, GNNs output is input order invarient
+5.   Human intelligencce is most based on the graph, GNNs can do information propagation guided by the graph structure
+6.   GNNs explores to generate the graph from non-structural data
 
 ## Models
 
++   GDyNet and CGCNN model: Application of GNN in materials. Details can be found at [Github link](https://github.com/OrdinaryCrazy/cnn-compiler-notebook/blob/master/weekly-report/weeklyreport0722-0728.pdf)
 
+## System View Optimization
 
++   Tigr
+
+    **T**ransform **i**rregular **g**raphs into more **r**egular ones such that the graphs can be processed more efficiently on GPU-like architectures while guaranteeing correctness.
+    ![1568654140133](figures/1568654140133.png)
+    Details can be found at [Github link](https://github.com/OrdinaryCrazy/cnn-compiler-notebook/blob/master/Studying%20Note/tigr.md)
++ 
 ## General Model Project: PyTorch Geometric
 
 Github Project [rusty1s/pytorch_geometric](https://github.com/rusty1s/pytorch_geometric) implements many important GNN models with general GNN model Message Passing Neural Network, and builds an end-to-end graph data loading to testing model architecture. Detail studying note can be found at [Github Link](https://github.com/OrdinaryCrazy/cnn-compiler-notebook/blob/master/Studying Note/learn-pytorch-geometric.md)
@@ -81,9 +98,17 @@ I modified this project for the following research: Code can be found at [Github
     Details can be found at [Github link](https://github.com/OrdinaryCrazy/cnn-compiler-notebook/blob/master/weekly-report/weeklyreport0722-0728.pdf)
 ![ppi_plot_cpu](figures/ppi_plot_cpu.png)
 
-+   Visualization of GNN Pooling function
++   Visualization of Pooling effectiveness
 
-    Details can be found at [Github link]()
+    In topology domain: **Less nodes**
+    
+    ![pool](figures/pool.png)
+    
+    In embedding domain: **Maintenance of group structure and similarity**
+    
+    ![pool2](figures/pool2.png)
+    
+    Details can be found at [Github link](https://github.com/OrdinaryCrazy/cnn-compiler-notebook/blob/master/GNN-jupyter-code/topk-pooling%20visualization.ipynb)
 
 ## Hierarchically Aggregated computation Graphs (HAGs)
 
@@ -105,11 +130,15 @@ Problems:
 
         ![HAG](figures/HAG.png)
 
-    2.  
+    2.  Detailed description about max redundancy computation Details can be found at [Github link](https://github.com/OrdinaryCrazy/cnn-compiler-notebook/blob/master/weekly-report/weeklyreport0729-0804.pdf)
+    
+    ![computation and topology](figures/computation and topology.png)
 
 ### Reimplementation
 
-Details can be found at [Github link]()
+Release [HAG model Version 0.0][https://github.com/OrdinaryCrazy/cnn-compiler-notebook/blob/master/GNN-jupyter-code/HAG.py]
+
+More details can be found at [Tutorial](https://github.com/OrdinaryCrazy/cnn-compiler-notebook/blob/master/weekly-report/weeklyreport0729-0804.pdf) and [Github build](https://github.com/OrdinaryCrazy/cnn-compiler-notebook/tree/master/HAG)
 
 # Motion-Vector based video Object Detection
 
