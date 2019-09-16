@@ -8,28 +8,24 @@ This is a repository of Jingtun ZHANG’s 2019 summer intern @[University of Cal
 >
 >   Weekly report can be found at [Github link](https://github.com/OrdinaryCrazy/cnn-compiler-notebook/tree/master/weekly-report)
 
-# Table of Content
-
-[TOC]
-
 # Graph Neural Network Survey
 
 ## Background
 
 ### Origin GNN
 
-**Target problem**: learn a state embedding $ \mathbf{h}_v\in \mathbb{R}^{s}$ for each node
+**Target problem**: learn a state embedding $\mathbf{h}_v\in \mathbb{R}^{s}$ for each node
 
 **Traditional procedure**:
 
->   $\mathbf{h}_{v} = f(\mathbf{x}_v,edge\_attr_v,\mathbf{h}_u,\mathbf{x}_u)$
->   $u$ means neighbors of $v$, $f$ is local parameterized transition function
->   $\mathbf{o}_v = g(\mathbf{h}_v, \mathbf{x}_v)$
->   $g$ is local output function
+$\mathbf{h}_{v} = f(\mathbf{x}_v,edge\_attr_v,\mathbf{h}_u,\mathbf{x}_u)$
+$u$ means neighbors of $v$, $f$ is local parameterized transition function
+$\mathbf{o}_v = g(\mathbf{h}_v, \mathbf{x}_v)$
+$g$ is local output function
 
 **Typical loss**:
 
->   $loss = \sum_{i = 1}^{p}(target_i - output_i)$
+$loss = \sum_{i = 1}^{p}(target_i - output_i)$
 
 Details can be found at [Github link](https://github.com/OrdinaryCrazy/cnn-compiler-notebook/blob/master/Studying%20Note/README.md)
 
@@ -53,14 +49,20 @@ $Z = \widetilde{D}^{-\frac{1}{2}} \widetilde{A} \widetilde{D}^{-\frac{1}{2}}X\Th
 2. $Z\in \mathbb{R}^{N \times F}$: convolved signal matrix
 
 **Layer-wise propagation rule:**
+
 $H^{(l+1)} = \sigma( \widetilde{D}^{-\frac{1}{2}} \widetilde{A} \widetilde{D}^{-\frac{1}{2}} H^{(l)} W^{(l)})$
+
 $\widetilde{A} = A + I_N$: adjacency matrix with added self connection
+
 $\widetilde{D}_{ii} = \sum_j \widetilde{A}_{ij}$:
+
 $W^{(l)}$: layer-specific trainable weight matrix
+
 $\sigma(\cdot)$:  activation function
+
 $H^{(l)} \in \mathbb{R}^{N \times D}$: the matirx of activations in the $l^{th}$ layer, $H^{(0)} = X$
 
-Details can be found at [Github link](https://github.com/OrdinaryCrazy/cnn-compiler-notebook/blob/master/Studying Note/GCN.md)
+Details can be found at [Github link](https://github.com/OrdinaryCrazy/cnn-compiler-notebook/blob/master/Studying%20Note/GCN.md)
 
 ###  Why GNN from CNN
 
@@ -81,11 +83,17 @@ Details can be found at [Github link](https://github.com/OrdinaryCrazy/cnn-compi
 
     **T**ransform **i**rregular **g**raphs into more **r**egular ones such that the graphs can be processed more efficiently on GPU-like architectures while guaranteeing correctness.
     ![1568654140133](figures/1568654140133.png)
+    
     Details can be found at [Github link](https://github.com/OrdinaryCrazy/cnn-compiler-notebook/blob/master/Studying%20Note/tigr.md)
-+ 
+    
++ Fast train GNN on dense hardware
+
+    Permute nodes to expose low bandwidth structure and express GNN propagation in terms of application of dense matrix multiply primitive.
+
+    Details can be found at [Github link](https://github.com/OrdinaryCrazy/cnn-compiler-notebook/blob/master/paper-reading-note/fast-training%20of%20sparse%20gnn%20on%20dense%20hardware.pdf)
 ## General Model Project: PyTorch Geometric
 
-Github Project [rusty1s/pytorch_geometric](https://github.com/rusty1s/pytorch_geometric) implements many important GNN models with general GNN model Message Passing Neural Network, and builds an end-to-end graph data loading to testing model architecture. Detail studying note can be found at [Github Link](https://github.com/OrdinaryCrazy/cnn-compiler-notebook/blob/master/Studying Note/learn-pytorch-geometric.md)
+Github Project [rusty1s/pytorch_geometric](https://github.com/rusty1s/pytorch_geometric) implements many important GNN models with general GNN model Message Passing Neural Network, and builds an end-to-end graph data loading to testing model architecture. Detail studying note can be found at [Github Link](https://github.com/OrdinaryCrazy/cnn-compiler-notebook/blob/master/Studying%20Note/learn-pytorch-geometric.md)
 
 ![1568652726168](figures/1568652726168.png)
 
@@ -126,17 +134,21 @@ Problems:
 
 +   More Discussion:
 
-    1.  Understanding of the model: Details can be found at [Github link](https://github.com/OrdinaryCrazy/cnn-compiler-notebook/blob/master/weekly-report/weeklyreport0722-0728.pdf)
+    1.  Understanding of the model: 
+
+        Details can be found at [Github link](https://github.com/OrdinaryCrazy/cnn-compiler-notebook/blob/master/weekly-report/weeklyreport0722-0728.pdf)
 
         ![HAG](figures/HAG.png)
-
-    2.  Detailed description about max redundancy computation Details can be found at [Github link](https://github.com/OrdinaryCrazy/cnn-compiler-notebook/blob/master/weekly-report/weeklyreport0729-0804.pdf)
+    
+    2.  Detailed description about max redundancy computation: 
+    
+        Details can be found at [Github link](https://github.com/OrdinaryCrazy/cnn-compiler-notebook/blob/master/weekly-report/weeklyreport0729-0804.pdf)
     
     ![computation and topology](figures/computation and topology.png)
 
 ### Reimplementation
 
-Release [HAG model Version 0.0][https://github.com/OrdinaryCrazy/cnn-compiler-notebook/blob/master/GNN-jupyter-code/HAG.py]
+Release [HAG model Version 0.0](https://github.com/OrdinaryCrazy/cnn-compiler-notebook/blob/master/GNN-jupyter-code/HAG.py)
 
 More details can be found at [Tutorial](https://github.com/OrdinaryCrazy/cnn-compiler-notebook/blob/master/weekly-report/weeklyreport0729-0804.pdf) and [Github build](https://github.com/OrdinaryCrazy/cnn-compiler-notebook/tree/master/HAG)
 
@@ -158,21 +170,85 @@ Details can be found at [Github link](https://github.com/OrdinaryCrazy/cnn-compi
 
 ### Motion Vector Feature Flow Version3
 
+#### Idea
 
+Rather than just scale the motion vector by 1x1 Convolutional Layer, we try to build a more complicated MV_Net try to improve the quality of motion vector used at feature map level. MV_Net is piced as following:
+
+![](./figures/mvnet.png)
+
+#### Result and Discussion
+
+We get MAP@5 = 0.6225 with above MV_Net architecture, some points we discussed in the design:
+
+*   MVFF-Object-Detection task is sensitive to the information loss in integer-times scale and width-height-same-ratio scale of movtion vector in pooling process, so we need firstly use interpolation (non-integer-times) scale to scale the movtion vector to a integer-times of
+    feature map shape (16\*feat-map-width, 16*feat-map-height)
+
+    Details can be found at [Github link](https://github.com/OrdinaryCrazy/cnn-compiler-notebook/blob/master/weekly-report/weeklyreport0819-0825.pdf)
+
+Code find at [MVFF-Version3](https://github.com/OrdinaryCrazy/mvff-sideversions) 
+
+File organization same as [Deep Feature Flow for Video Recognition](https://github.com/msracver/Deep-Feature-Flow)
 
 ### Motion Vector Feature Flow Version4
 
+#### Idea
 
+Use DMC-Net like structure to fine-tune the motion vector, try to gain more motion information form residual data under optical flow guidence.
 
-## Discuss
+![1566861769179](figures/1566861769179.png)
+![1566862456389](figures/1566862456389.png)
 
+DMC-Net details can be found at [Github Link]([https://github.com/OrdinaryCrazy/cnn-compiler-notebook/blob/master/Studying%20Note/DMC-Net.md](https://github.com/OrdinaryCrazy/cnn-compiler-notebook/blob/master/Studying Note/DMC-Net.md))
 
+#### Result and Discussion
+
+Result of MVFF-Version4-without optical flow guidence: MAP@5 = 0.5091.
+
+Maybe we need extract optical flow from the dataset first.
+
+Code find at [MVFF-Version4](https://github.com/OrdinaryCrazy/mvff-sideversions/tree/master/Version4) 
+
+### Motion Vector Output Flow Step-Performance Curve
+
+We tried different steps of MVOF to approximate the result of DFF and accelerate it, trying to analyse motion vector propagation at output level.
+
+![mvof](figures/mvof.png)
 
 # Quantum Computing Learning
 
 ## First stage: From bits to qubits: Basical Concepts and Algorithm of Quantum Computing
 
+### What Is a QPU? 
 
+*   QPU (Quantum Processing Unit) is a co-processor 
+
+*   QPU has ability to dramatically extend the kinds of problems that are tractable within computing. 
+
+*   The CPU issues the QPU co-processor commands only to initiate tasks suited to its capabilities.
+
+### Native QPU Instructions 
+
+*   Conventional high-level languages are commonly used to control lower-level QPU instructions. 
+
+*   Essential QPU instruction set 
+
+### Simulator Limitations 
+
+*   One measure of the power of a QPU is the number of qubits it has available to operate on. 
+
+*   Each qubit added to simulation will double the memory required to run the simulation, cutting its speed in half.
+
+### QPU Versus GPU: 
+
+Some Common Characteristics What it’s like to program a QPU:
+*   It is very rare that a program will run entirely on a QPU. Usually, a program runnning on a CPU will issue QPU instructions, and later retrieve the results.
+*   Some tasks are very suited to the QPU, and others are not.
+*   The QPU runs on a separate clock from the CPU, and usually has its own dedicated hardware interfaces to external devices (such as optical outputs).
+*   A typical QPU has its own special RAM, which the CPU cannot efficiently access.
+*   A simple QPU will be one chip accessed by a laptop, or even perhaps eventually an area within another chip. A more advanced QPU is a large and expensive addon, and always requires special cooling.
+*   When a computation is done, a projection of the result is returned to the CPU, and most of the QPU’s internal working data is discarded.
+*   QPU debugging can be very tricky, requiring special tools and techniques, Stepping through a program can be difficult, and often the best approcah is to make changes to the program and observe their effect on the output.
+*   Optimizations that speed up one QPU may slow down another.
 
 ## ~~Second stage: Great idea evolution and Important Works~~
 
